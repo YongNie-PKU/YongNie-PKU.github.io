@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>显示兴趣点地图</title>
+    <!-- 引入高德地图API -->
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=2.0&key=d791274830b75f48b7972897a330e24e"></script>
+    <!-- 引入高德地图热力图插件 -->
+    <script type="text/javascript" src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add custom styles here */
+        #map {
+            width: 80vw;
+            /* 占据视窗宽度的80% */
+            height: 100vh;
+            /* 占据整个视窗的高度 */
+        }
+
+        /* Custom styles for navigation bar */
+        .navbar.navbar-expand-lg.navbar-light.bg-light {
+            background-color: #f0f1f3 !important;
+            /* 设置导航栏的背景颜色 */
+            height: 100px;
+            /* 调整导航栏的高度 */
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            /* 垂直居中 */
+            font-size: 40px;
+            /* 调整标题的字体大小 */
+            font-weight: bold;
+            /* 设置标题的字体粗细 */
+            font-family: 'Helvetica';
+            /* 设置标题的字体 */
+            margin-right: 60px;
+            color: #5d5c5c;
+            /*text-decoration: none;*/
+            /* 去掉超链接 */
+            pointer-events: none;
+            /* 禁止点击 */
+
+        }
+
+        .navbar-brand img {
+            max-height: 80%;
+            /* 图片最大高度等于导航栏的高度 */
+            margin-right: 40px;
+            /* 图片和文字之间的间距 */
+        }
+
+        .nav-item {
+            margin-left: 60px;
+            font-size: 24px;
+            font-family: 'Helvetica';
+            color: #333;
+        }
+
+        /* 自定义隔离栏样式 */
+        .separator {
+            height: 2px;
+            background-color: #ccc;
+            margin: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            /* 添加阴影效果 */
+        }
+
+        /* Custom info window styles */
+        .info-window {
+            width: 1000px;
+            height: 500px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            /* 添加此行确保内容不会溢出 */
+        }
+
+        .info-window img {
+            max-width: 100%;
+            max-height: 100px;
+            /* 限制图片高度 */
+            width: 450px;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+            /* 保持图片纵横比并适应容器 */
+            margin-left: 10px;
+            align-self: flex-end;
+            /* 将图片靠近底端 */
+
+
+        }
+
+        .info-window-header {
+            padding: 5px;
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+
+        .info-window-images {
+            display: flex;
+            /* 使用 Flexbox 布局 */
+            justify-content: space-between;
+            /* 图片之间的空白空间 */
+        }
+
+        .image-container {
+            flex: 1;
+            /* 均分宽度 */
+            text-align: center;
+            /* 图片居中对齐 */
+            margin: 0 5px;
+            /* 图片容器的外边距 */
+        }
+
+        .image-separator {
+            width: 3px;
+            /* 隔离栏宽度 */
+            background-color: #ccc;
+            /* 隔离栏背景颜色 */
+            margin: 0 10px;
+            /* 隔离栏外边距 */
+        }
+
+        .info-window-buttons {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 10px;
+        }
+
+        .info-window-buttons button {
+            margin-right: 5px;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 20vw;
+            height: 100vh;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            padding: 10px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Custom styles for taxonomy list */
+        .sidebar {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .accordion-item {
+            margin-bottom: 10px;
+            /* Bacteria与Archaea之间的行距 */
+        }
+
+        .accordion-button {
+            color: #333;
+            /*字体颜色*/
+            background-color: #fff;
+            text-align: left;
+            width: 100%;
+            padding: 3px;
+            /*按钮的高和长*/
+            font-size: 14px;
+            border: none;
+            /* 去除按钮的边框 */
+
+            border-radius: 0.1px;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .accordion-collapse {
+            padding-left: 10px;
+            list-style-type: none;
+            border-radius: 0.1px;
+            border: none;
+            /* 去除按钮的边框 */
+
+        }
+
+        .accordion-body {
+            font-size: 14px;
+            padding-left: 10px;
+            padding-top: 5px;
+            /* 调整为您希望的上内边距 */
+            padding-bottom: 5px;
+            /* 调整为您希望的下内边距 */
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 100px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="Logo" height="90">
+                Mapping the Microbes of PKU
+            </a>
+            <!-- Add your navigation links here -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 隔离栏 -->
+    <div class="separator"></div>
+    <!-- Map Container -->
+    <div id="map"></div>
+
+    <!-- Sidebar for taxonomic list -->
+    <div class="sidebar" id="taxonomyList">
+        <h2>Taxonomic List</h2>
+        <div class="accordion" id="taxonomyAccordion">
+            <!-- Taxonomic categories will be dynamically added here -->
+        </div>
+    </div>
+    <!-- Bootstrap JS (Optional, for Bootstrap components that require JavaScript) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- 地图容器 -->
+    <div id="map" style="height: 100vh;"></div>
+
+    <!-- 加载兴趣点数据和地图初始化 -->
+    <script src="interestPoints.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to fetch and parse CSV data
+            function fetchCSV(url) {
+                return fetch(url)
+                    .then(response => response.text())
+                    .then(text => {
+                        // Parse CSV data
+                        const data = [];
+                        const rows = text.trim().split(/\r?\n/);
+                        const headers = rows[0].split(',');
+                        for (let i = 1; i < rows.length; i++) {
+                            const values = rows[i].split(',');
+                            const entry = {};
+                            for (let j = 0; j < headers.length; j++) {
+                                entry[headers[j].trim()] = values[j].trim();
+                            }
+                            data.push(entry);
+                        }
+                        return data;
+                    });
+            }
+
+            // Function to generate taxonomy list from CSV data
+            function generateTaxonomyList(csvUrl, containerId) {
+                const container = document.getElementById(containerId);
+                fetchCSV(csvUrl)
+                    .then(data => {
+                        const taxonomyAccordion = document.getElementById('taxonomyAccordion');
+                        // Group data by domain, phylum, class, order, family, genus
+                        const groupedData = {};
+                        data.forEach(entry => {
+                            const domain = entry['domain'];
+                            const phylum = entry['phylum'];
+                            const classVal = entry['class'];
+                            const order = entry['order'];
+                            const family = entry['family'];
+                            const genus = entry['genus'];
+
+                            if (!groupedData[domain]) groupedData[domain] = {};
+                            if (!groupedData[domain][phylum]) groupedData[domain][phylum] = {};
+                            if (!groupedData[domain][phylum][classVal]) groupedData[domain][phylum][classVal] = {};
+                            if (!groupedData[domain][phylum][classVal][order]) groupedData[domain][phylum][classVal][order] = {};
+                            if (!groupedData[domain][phylum][classVal][order][family]) groupedData[domain][phylum][classVal][order][family] = [];
+                            groupedData[domain][phylum][classVal][order][family].push(genus);
+                        });
+
+                        // Generate HTML for accordion
+                        Object.keys(groupedData).forEach(domain => {
+                            const domainItem = document.createElement('div');
+                            domainItem.classList.add('accordion-item');
+
+                            const domainHeader = document.createElement('h3');
+                            domainHeader.classList.add('accordion-header');
+                            domainHeader.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${domain.replaceAll(' ', '_')}" aria-expanded="true" aria-controls="${domain.replaceAll(' ', '_')}">${domain}</button>`;
+                            domainItem.appendChild(domainHeader);
+
+                            const domainCollapse = document.createElement('div');
+                            domainCollapse.id = domain.replaceAll(' ', '_');
+                            domainCollapse.classList.add('accordion-collapse', 'collapse');
+                            domainCollapse.setAttribute('aria-labelledby', `${domain.replaceAll(' ', '_')}`);
+                            domainCollapse.setAttribute('data-bs-parent', '#taxonomyAccordion');
+
+                            const domainBody = document.createElement('div');
+                            domainBody.classList.add('accordion-body');
+
+                            // Initially load phylum items without their children
+                            Object.keys(groupedData[domain]).forEach(phylum => {
+                                const phylumList = document.createElement('ul');
+                                const phylumItem = document.createElement('li');
+                                phylumItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${phylum.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${phylum.replaceAll(' ', '_')}">${phylum}</button>`;
+                                phylumItem.addEventListener('click', () => {
+                                    if (!phylumCollapse.classList.contains('show')) {
+                                        phylumCollapse.innerHTML = ''; // Clear previous content
+                                        generatePhylumItems(phylum, groupedData[domain][phylum], phylumCollapse);
+                                    }
+                                });
+                                const phylumCollapse = document.createElement('div');
+                                phylumCollapse.id = phylum.replaceAll(' ', '_');
+                                phylumCollapse.classList.add('accordion-collapse', 'collapse');
+                                phylumCollapse.setAttribute('aria-labelledby', `${phylum.replaceAll(' ', '_')}`);
+                                phylumCollapse.setAttribute('data-bs-parent', `#${domain.replaceAll(' ', '_')}`);
+                                phylumCollapse.appendChild(phylumList);
+                                phylumItem.appendChild(phylumCollapse);
+                                domainBody.appendChild(phylumItem);
+                            });
+
+                            domainCollapse.appendChild(domainBody);
+                            domainItem.appendChild(domainCollapse);
+                            taxonomyAccordion.appendChild(domainItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching CSV:', error);
+                    });
+            }
+
+            // Function to generate phylum items and their children
+            function generatePhylumItems(phylum, phylumData, parentElement) {
+                Object.keys(phylumData).forEach(classVal => {
+                    const classList = document.createElement('ul');
+                    const classItem = document.createElement('li');
+                    classItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${classVal.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${classVal.replaceAll(' ', '_')}">${classVal}</button>`;
+                    classItem.addEventListener('click', () => {
+                        if (!classCollapse.classList.contains('show')) {
+                            classCollapse.innerHTML = ''; // Clear previous content
+                            generateClassItems(classVal, phylumData[classVal], classCollapse);
+                        }
+                    });
+                    const classCollapse = document.createElement('div');
+                    classCollapse.id = classVal.replaceAll(' ', '_');
+                    classCollapse.classList.add('accordion-collapse', 'collapse');
+                    classCollapse.setAttribute('aria-labelledby', `${classVal.replaceAll(' ', '_')}`);
+                    classCollapse.setAttribute('data-bs-parent', `#${phylum.replaceAll(' ', '_')}`);
+                    classCollapse.appendChild(classList);
+                    classItem.appendChild(classCollapse);
+                    parentElement.appendChild(classItem);
+                });
+            }
+
+            // Function to generate class items and their children
+            function generateClassItems(classVal, classData, parentElement) {
+                Object.keys(classData).forEach(order => {
+                    const orderList = document.createElement('ul');
+                    const orderItem = document.createElement('li');
+                    orderItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${order.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${order.replaceAll(' ', '_')}">${order}</button>`;
+                    orderItem.addEventListener('click', () => {
+                        if (!orderCollapse.classList.contains('show')) {
+                            orderCollapse.innerHTML = ''; // Clear previous content
+                            generateOrderItems(order, classData[order], orderCollapse);
+                        }
+                    });
+                    const orderCollapse = document.createElement('div');
+                    orderCollapse.id = order.replaceAll(' ', '_');
+                    orderCollapse.classList.add('accordion-collapse', 'collapse');
+                    orderCollapse.setAttribute('aria-labelledby', `${order.replaceAll(' ', '_')}`);
+                    orderCollapse.setAttribute('data-bs-parent', `#${classVal.replaceAll(' ', '_')}`);
+                    orderCollapse.appendChild(orderList);
+                    orderItem.appendChild(orderCollapse);
+                    parentElement.appendChild(orderItem);
+                });
+            }
+
+            // Function to generate order items and their children
+            function generateOrderItems(order, orderData, parentElement) {
+                Object.keys(orderData).forEach(family => {
+                    const familyList = document.createElement('ul');
+                    const familyItem = document.createElement('li');
+                    familyItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${family.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${family.replaceAll(' ', '_')}">${family}</button>`;
+                    familyItem.addEventListener('click', () => {
+                        if (!familyCollapse.classList.contains('show')) {
+                            familyCollapse.innerHTML = ''; // Clear previous content
+                            generateFamilyItems(family, orderData[family], familyCollapse);
+                        }
+                    });
+                    const familyCollapse = document.createElement('div');
+                    familyCollapse.id = family.replaceAll(' ', '_');
+                    familyCollapse.classList.add('accordion-collapse', 'collapse');
+                    familyCollapse.setAttribute('aria-labelledby', `${family.replaceAll(' ', '_')}`);
+                    familyCollapse.setAttribute('data-bs-parent', `#${order.replaceAll(' ', '_')}`);
+                    familyCollapse.appendChild(familyList);
+                    familyItem.appendChild(familyCollapse);
+                    parentElement.appendChild(familyItem);
+                });
+            }
+
+            // Function to generate family items and their children
+            function generateFamilyItems(family, familyData, parentElement) {
+                familyData.forEach(genus => {
+                    const genusItem = document.createElement('li');
+                    genusItem.innerHTML = `<a href="#" data-taxonomy="${genus}">${genus}</a>`;
+                    parentElement.appendChild(genusItem);
+                });
+            }
+
+            // Call function to generate taxonomy list from CSV
+            generateTaxonomyList('https://raw.githubusercontent.com/YongNie-PKU/mPKU.github.io/main/list.csv', 'taxonomyList');
+        });
+
+
+
+
+        var map, infoWindow;
+
+        // 初始化地图函数
+        function initMap() {
+            // 创建地图实例
+            map = new AMap.Map('map', {
+                center: [116.310716, 39.99188], // 设置地图中心点为北京大学未名湖
+                zoom: 16 // 设置地图缩放级别
+            });
+
+            // 创建信息窗口
+            infoWindow = new AMap.InfoWindow({
+                isCustom: true,  // 使用自定义窗体
+                offset: new AMap.Pixel(0, -30)
+            });
+
+            // 添加兴趣点标记到地图
+            addMarkersToMap(map, interestPoints);
+            // 添加缩放控件
+            AMap.plugin(['AMap.ToolBar'], function () {
+                map.addControl(new AMap.ToolBar());
+            });
+
+            // 点击地图关闭信息窗口
+            map.on('click', function () {
+                infoWindow.close();
+            });
+
+
+        }
+
+        // 添加标记到地图函数
+        function addMarkersToMap(map, points) {
+            points.forEach(point => {
+                const marker = new AMap.Marker({
+                    position: new AMap.LngLat(point.longitude, point.latitude),
+                    icon: new AMap.Icon({
+                        size: new AMap.Size(16, 24),  // 图标大小
+                        image: 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',  // 图标图片路径
+                        imageSize: new AMap.Size(16, 24)
+                    }),
+                    map: map
+                });
+
+                // 创建信息窗口内容
+                const content = `<div class="info-window">
+                          <div class="info-window-header">
+                            <h3>${point.ID}</h3>
+                            <p>${point.description}, 采样时间：${point.description}</p>
+                             <p>${point.description}</p>
+                            </div>  
+                           <div class="info-window-images">
+        <div class="image-container">
+            <img id="image1" src=${point.photo}>
+        </div>
+        <div class="image-separator"></div> <!-- 隔离栏 -->
+        <div class="image-container">
+            <img id="image2" src=${point.imgp}>
+        </div>
+    </div>
+    <div class="info-window-buttons">
+        <button id="btnPhylum">Phylum</button>
+        <button id="btnClass">Class</button>
+        <button id="btnOrder">Order</button>
+        <button id="btnFamily">Family</button>
+        <button id="btnGenus">Genus</button>
+    </div>
+    </div>
+                                                                                               
+                        </div>`;
+
+                // 点击标记显示信息窗口
+                marker.on('click', function () {
+                    infoWindow.setContent(content);
+                    infoWindow.open(map, marker.getPosition());
+                    // 获取图片元素
+                    const image2 = document.getElementById('image2');
+
+                    // 获取按钮元素
+                    const btnPhylum = document.getElementById('btnPhylum');
+                    const btnClass = document.getElementById('btnClass');
+                    const btnOrder = document.getElementById('btnOrder');
+                    const btnFamily = document.getElementById('btnFamily');
+                    const btnGenus = document.getElementById('btnGenus');
+
+                    // 设置按钮点击事件处理程序
+                    btnPhylum.addEventListener('click', function () {
+                        image2.src = point.imgp; // 替换为实际的图片路径
+                    });
+
+                    btnClass.addEventListener('click', function () {
+                        image2.src = point.imgc; // 替换为实际的图片路径
+                    });
+
+                    btnOrder.addEventListener('click', function () {
+                        image2.src = point.imgo; // 替换为实际的图片路径
+                    });
+
+                    btnFamily.addEventListener('click', function () {
+                        image2.src = point.imgf; // 替换为实际的图片路径
+                    });
+
+                    btnGenus.addEventListener('click', function () {
+                        image2.src = point.imgg; // 替换为实际的图片路径
+                    });
+                });
+            });
+
+        }
+
+
+
+        // 加载完页面后初始化地图
+        window.onload = initMap;
+
+
+    </script>
+
+</body>
+
+
+</html>
