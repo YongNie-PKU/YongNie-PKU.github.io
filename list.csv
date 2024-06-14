@@ -98,7 +98,7 @@ Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,SC-I-84,SC-I-84
 Bacteria,Bacteroidota,Bacteroidia,Cytophagales,Spirosomaceae,Emticicia
 Bacteria,Chloroflexi,Anaerolineae,SBR1031,A4b,A4b
 Bacteria,Bacteroidota,Bacteroidia,Cytophagales,Spirosomaceae,Spirosoma
-Bacteria,Desulfobacterota,uncultured,uncultured,uncultured,uncultured
+Bacteria,Desulfobacterota,,,,
 Bacteria,Actinobacteriota,Thermoleophilia,Gaiellales,uncultured,uncultured
 Bacteria,Proteobacteria,Alphaproteobacteria,Rhizobiales,Xanthobacteraceae,uncultured
 Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,Sutterellaceae,uncultured
@@ -157,7 +157,7 @@ Bacteria,Chloroflexi,Chloroflexia,Kallotenuales,AKIW781,AKIW781
 Bacteria,Bacteroidota,Bacteroidia,Sphingobacteriales,env.OPS_17,env.OPS_17
 Bacteria,Bacteroidota,Bacteroidia,Cytophagales,Hymenobacteraceae,Pontibacter
 Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,Burkholderiaceae,Burkholderia-Caballeronia-Paraburkholderia
-Bacteria,Armatimonadota,uncultured,uncultured,uncultured,uncultured
+Bacteria,Armatimonadota,,,,
 Bacteria,Verrucomicrobiota,Verrucomicrobiae,Pedosphaerales,Pedosphaeraceae,ADurb.Bin063-1
 Bacteria,Actinobacteriota,Actinobacteria,Corynebacteriales,Mycobacteriaceae,Mycobacterium
 Bacteria,Proteobacteria,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Ochrobactrum
@@ -525,7 +525,7 @@ Bacteria,Firmicutes,Bacilli,Bacillales,Planococcaceae,Domibacillus
 Bacteria,Chloroflexi,Chloroflexia,Chloroflexales,Chloroflexaceae,FFCH7168
 Bacteria,Verrucomicrobiota,Verrucomicrobiae,Opitutales,Opitutaceae,Lacunisphaera
 Bacteria,Proteobacteria,Alphaproteobacteria,Acetobacterales,Acetobacteraceae,Rubritepida
-Bacteria,Acidobacteriota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Acidobacteriota,,,,
 Bacteria,Myxococcota,Polyangia,Nannocystales,Nannocystaceae,Nannocystis
 Bacteria,Proteobacteria,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Rhizorhapis
 Bacteria,Actinobacteriota,Actinobacteria,Micrococcales,Bogoriellaceae,Georgenia
@@ -589,10 +589,10 @@ Bacteria,Patescibacteria,Parcubacteria,Candidatus_Nomurabacteria,Candidatus_Nomu
 Bacteria,Firmicutes,Bacilli,Staphylococcales,Staphylococcaceae,Salinicoccus
 Bacteria,Bacteroidota,Bacteroidia,Chitinophagales,Saprospiraceae,Phaeodactylibacter
 Bacteria,Firmicutes,Bacilli,Lactobacillales,Leuconostocaceae,Weissella
-Bacteria,Chloroflexi,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Chloroflexi,,,,
 Bacteria,Verrucomicrobiota,Kiritimatiellae,WCHB1-41,WCHB1-41,WCHB1-41
 Bacteria,Planctomycetota,Phycisphaerae,Phycisphaerales,Phycisphaeraceae,CL500-3
-Bacteria,Proteobacteria,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Proteobacteria,,,,
 Bacteria,Actinobacteriota,Actinobacteria,Frankiales,Frankiales,Frankiales
 Bacteria,Firmicutes,Bacilli,Lactobacillales,Enterococcaceae,Enterococcus
 Bacteria,Firmicutes,Clostridia,Peptostreptococcales-Tissierellales,Peptostreptococcaceae,Terrisporobacter
@@ -615,7 +615,7 @@ Bacteria,Proteobacteria,Gammaproteobacteria,Nitrosococcales,Nitrosococcaceae,SZB
 Bacteria,Planctomycetota,Planctomycetes,Planctomycetales,Schlesneriaceae,Schlesneria
 Bacteria,Actinobacteriota,Actinobacteria,Micrococcales,Microbacteriaceae,Leucobacter
 Bacteria,Verrucomicrobiota,Verrucomicrobiae,Chthoniobacterales,Terrimicrobiaceae,Terrimicrobium
-Bacteria,Firmicutes,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Firmicutes,,,,
 Bacteria,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,Antarcticibacterium
 Bacteria,Bacteroidota,Bacteroidia,Chitinophagales,Chitinophagaceae,Lacibacter
 Bacteria,Cyanobacteria,Cyanobacteriia,Cyanobacteriales,Nostocaceae,Aphanizomenon_NIES81
@@ -633,7 +633,7 @@ Bacteria,Firmicutes,Clostridia,Peptostreptococcales-Tissierellales,Peptostreptoc
 Bacteria,Bacteroidota,Rhodothermia,Rhodothermales,Rhodothermaceae,Rhodothermaceae
 Bacteria,Myxococcota,Polyangia,Nannocystales,Nannocystaceae,Nannocystaceae
 Bacteria,Chloroflexi,Chloroflexia,Chloroflexales,Chloroflexaceae,Chloronema
-Bacteria,Patescibacteria,uncultured,uncultured,uncultured,uncultured
+Bacteria,Patescibacteria,,,,
 Bacteria,Verrucomicrobiota,Verrucomicrobiae,Verrucomicrobiales,Unclassified,Unclassified
 Bacteria,Acidobacteriota,Blastocatellia,Elev-16S-573,Elev-16S-573,Elev-16S-573
 Bacteria,Proteobacteria,Gammaproteobacteria,Pseudomonadales,Moraxellaceae,Moraxella
@@ -661,7 +661,7 @@ Bacteria,Chloroflexi,Anaerolineae,Anaerolineales,Anaerolineaceae,Unclassified
 Bacteria,Proteobacteria,Alphaproteobacteria,Acetobacterales,Acetobacteraceae,Acetobacteraceae
 Bacteria,Myxococcota,Myxococcia,Myxococcales,Myxococcaceae,Myxococcus
 Bacteria,Bacteroidota,Bacteroidia,Chitinophagales,Chitinophagaceae,Niabella
-Bacteria,Actinobacteriota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Actinobacteriota,,,,
 Bacteria,Actinobacteriota,Actinobacteria,Pseudonocardiales,Pseudonocardiaceae,Crossiella
 Bacteria,Proteobacteria,Gammaproteobacteria,Oceanospirillales,Pseudohongiellaceae,BIyi10
 Bacteria,Chloroflexi,Chloroflexia,Chloroflexales,Chloroflexaceae,Candidatus_Chloroploca
@@ -769,7 +769,7 @@ Bacteria,Proteobacteria,Alphaproteobacteria,Rhodobacterales,Rhodobacteraceae,Thi
 Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,Neisseriaceae,Unclassified
 Bacteria,Firmicutes,Clostridia,Oscillospirales,Ruminococcaceae,CAG-352
 Bacteria,Patescibacteria,Gracilibacteria,Gracilibacteria,Gracilibacteria,Gracilibacteria
-Bacteria,Planctomycetota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Planctomycetota,,,,
 Bacteria,Firmicutes,Bacilli,Lactobacillales,Carnobacteriaceae,Unclassified
 Bacteria,Actinobacteriota,Actinobacteria,Corynebacteriales,Nocardiaceae,Gordonia
 Bacteria,Bacteroidota,Rhodothermia,Rhodothermales,Rhodothermaceae,Rubrivirga
@@ -1038,7 +1038,7 @@ Bacteria,Planctomycetota,Phycisphaerae,Unclassified,Unclassified,Unclassified
 Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,Nitrosomonadaceae,uncultured
 Bacteria,Patescibacteria,Saccharimonadia,Saccharimonadales,Saccharimonadaceae,TM7x
 Bacteria,Bacteroidota,Bacteroidia,Sphingobacteriales,Lentimicrobiaceae,Lentimicrobium
-Bacteria,Elusimicrobiota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Elusimicrobiota,,,,
 Bacteria,Actinobacteriota,Actinobacteria,Pseudonocardiales,Pseudonocardiaceae,Amycolatopsis
 Bacteria,Firmicutes,Clostridia,Peptococcales,Peptococcaceae,Peptococcus
 Bacteria,Firmicutes,Desulfitobacteriia,Desulfitobacteriales,Desulfitobacteriaceae,Desulfosporosinus
@@ -1062,7 +1062,7 @@ Bacteria,Bdellovibrionota,Oligoflexia,Silvanigrellales,Silvanigrellaceae,Silvani
 Bacteria,Cyanobacteria,Cyanobacteriia,Unclassified,Unclassified,Unclassified
 Bacteria,Proteobacteria,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,uncultured
 Bacteria,Bacteroidota,Bacteroidia,Bacteroidales,Paludibacteraceae,Paludibacter
-Bacteria,Myxococcota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Myxococcota,,,,
 Bacteria,Proteobacteria,Gammaproteobacteria,Nitrosococcales,Nitrosococcaceae,Unclassified
 Bacteria,Patescibacteria,ABY1,Candidatus_Uhrbacteria,Candidatus_Uhrbacteria,Candidatus_Uhrbacteria
 Bacteria,Patescibacteria,Microgenomatia,Candidatus_Roizmanbacteria,Candidatus_Roizmanbacteria,Candidatus_Roizmanbacteria
@@ -1077,7 +1077,7 @@ Bacteria,Firmicutes,Bacilli,Thermoactinomycetales,Thermoactinomycetaceae,uncultu
 Bacteria,Proteobacteria,Gammaproteobacteria,CCM19a,CCM19a,CCM19a
 Bacteria,Actinobacteriota,Actinobacteria,Kineosporiales,Kineosporiaceae,Angustibacter
 Bacteria,Desulfobacterota,Desulfuromonadia,Desulfuromonadia,Geothermobacteraceae,Geothermobacter
-Bacteria,Patescibacteria,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Patescibacteria,,,,
 Bacteria,Verrucomicrobiota,Verrucomicrobiae,Verrucomicrobiales,DEV007,DEV007
 Bacteria,Verrucomicrobiota,Verrucomicrobiae,Chthoniobacterales,01D2Z36,01D2Z36
 Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,Gallionellaceae,Gallionella
@@ -1300,9 +1300,9 @@ Bacteria,Cyanobacteria,Cyanobacteriia,Cyanobacteriales,Phormidiaceae,uncultured
 Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Paraliobacillus
 Bacteria,Patescibacteria,Parcubacteria,Candidatus_Campbellbacteria,Candidatus_Campbellbacteria,Candidatus_Campbellbacteria
 Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Amphibacillus
-Bacteria,Armatimonadota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Armatimonadota,,,,
 Bacteria,Proteobacteria,Gammaproteobacteria,WN-HWB-116,WN-HWB-116,WN-HWB-116
-Bacteria,Desulfobacterota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Desulfobacterota,,,,
 Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Lentibacillus
 Bacteria,Actinobacteriota,Actinobacteria,Frankiales,Geodermatophilaceae,Antricoccus
 Bacteria,Bacteroidota,Bacteroidia,Bacteroidales,M2PB4-65_termite_group,M2PB4-65_termite_group
@@ -1701,7 +1701,7 @@ Bacteria,Proteobacteria,Gammaproteobacteria,Enterobacterales,Morganellaceae,Buch
 Bacteria,Cyanobacteria,Cyanobacteriia,Cyanobacteriales,Nostocaceae,Unclassified
 Bacteria,Firmicutes,Clostridia,Lachnospirales,Lachnospiraceae,CAG-56
 Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,Chitinibacteraceae,Chitinibacter
-Bacteria,Firmicutes,uncultured,uncultured,uncultured,uncultured
+Bacteria,Firmicutes,,,,
 Bacteria,Firmicutes,Clostridia,Peptococcales,Peptococcaceae,Desulfitispora
 Bacteria,Planctomycetota,Planctomycetes,Planctomycetales,Planctomycetales,Planctomycetales
 Bacteria,Bacteroidota,Bacteroidia,Flavobacteriales,Flavobacteriaceae,uncultured
@@ -1828,7 +1828,7 @@ Bacteria,Proteobacteria,Gammaproteobacteria,Burkholderiales,Rhodocyclaceae,Z-35
 Bacteria,Proteobacteria,Alphaproteobacteria,Acetobacterales,Acetobacteraceae,Muricoccus
 Bacteria,Desulfobacterota,Desulfobulbia,Desulfobulbales,Desulfobulbaceae,uncultured
 Bacteria,Cyanobacteria,Cyanobacteriia,Cyanobacteriales,Phormidiaceae,Cephalothrix_SAG_75.79
-Bacteria,Gemmatimonadota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Gemmatimonadota,,,,
 Bacteria,Bacteroidota,Bacteroidia,Flavobacteriales,Cryomorphaceae,Vicingus
 Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium_sensu_stricto_2
 Bacteria,Chloroflexi,Ktedonobacteria,Ktedonobacterales,Ktedonobacteraceae,Unclassified
@@ -1901,7 +1901,7 @@ Bacteria,Proteobacteria,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Par
 Bacteria,Chloroflexi,Chloroflexi,Chloroflexi,Chloroflexi,Chloroflexi
 Bacteria,Desulfobacterota,Desulfobulbia,Desulfobulbales,Desulfurivibrionaceae,MSBL7
 Bacteria,Cyanobacteria,Cyanobacteriia,Cyanobacteriales,Nostocaceae,Nostoc_PCC-7524
-Bacteria,Verrucomicrobiota,Unclassified,Unclassified,Unclassified,Unclassified
+Bacteria,Verrucomicrobiota,,,,
 Bacteria,Proteobacteria,Alphaproteobacteria,Rhizobiales,Rhizobiaceae,Rhizobiaceae
 Bacteria,Firmicutes,Clostridia,Lachnospirales,Lachnospiraceae,Eisenbergiella
 Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Ornithinibacillus
