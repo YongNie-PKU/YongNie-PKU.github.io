@@ -4,12 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>显示兴趣点地图</title>
+    <title>Mapping the Microbes of Peking University</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
     <!-- 引入高德地图API -->
     <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=2.0&key=d791274830b75f48b7972897a330e24e"></script>
-    <!-- 引入高德地图热力图插件 -->
-    <script type="text/javascript" src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+
+    <script src="abundance.js"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/resource/heatmapData.js"></script>
+    <script src="heatmapdata.json"></script>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -219,7 +223,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 100px;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="Logo.png"  height="90">
+                <img src="logo.png" alt="Logo" height="90">
                 Mapping the Microbes of PKU
             </a>
             <!-- Add your navigation links here -->
@@ -238,7 +242,6 @@
             </div>
         </div>
     </nav>
-
     <!-- 隔离栏 -->
     <div class="separator"></div>
     <!-- Map Container -->
@@ -257,221 +260,77 @@
 
     <!-- 地图容器 -->
     <div id="map" style="height: 100vh;"></div>
-
     <!-- 加载兴趣点数据和地图初始化 -->
     <script src="interestPoints.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Function to fetch and parse CSV data
-            function fetchCSV(url) {
-                return fetch(url)
-                    .then(response => response.text())
-                    .then(text => {
-                        // Parse CSV data
-                        const data = [];
-                        const rows = text.trim().split(/\r?\n/);
-                        const headers = rows[0].split(',');
-                        for (let i = 1; i < rows.length; i++) {
-                            const values = rows[i].split(',');
-                            const entry = {};
-                            for (let j = 0; j < headers.length; j++) {
-                                entry[headers[j].trim()] = values[j].trim();
-                            }
-                            data.push(entry);
-                        }
-                        return data;
-                    });
-            }
 
-            // Function to generate taxonomy list from CSV data
-            function generateTaxonomyList(csvUrl, containerId) {
-                const container = document.getElementById(containerId);
-                fetchCSV(csvUrl)
-                    .then(data => {
-                        const taxonomyAccordion = document.getElementById('taxonomyAccordion');
-                        // Group data by domain, phylum, class, order, family, genus
-                        const groupedData = {};
-                        data.forEach(entry => {
-                            const domain = entry['domain'];
-                            const phylum = entry['phylum'];
-                            const classVal = entry['class'];
-                            const order = entry['order'];
-                            const family = entry['family'];
-                            const genus = entry['genus'];
+        var map, infoWindow;
+        // 初始化地图函数
+        /*function initMap() {*/
+        // 创建地图实例
+        map = new AMap.Map('map', {
+            center: [116.310716, 39.99188], // 设置地图中心点为北京大学未名湖
+            zoom: 16 // 设置地图缩放级别
+        });
 
-                            if (!groupedData[domain]) groupedData[domain] = {};
-                            if (!groupedData[domain][phylum]) groupedData[domain][phylum] = {};
-                            if (!groupedData[domain][phylum][classVal]) groupedData[domain][phylum][classVal] = {};
-                            if (!groupedData[domain][phylum][classVal][order]) groupedData[domain][phylum][classVal][order] = {};
-                            if (!groupedData[domain][phylum][classVal][order][family]) groupedData[domain][phylum][classVal][order][family] = [];
-                            groupedData[domain][phylum][classVal][order][family].push(genus);
-                        });
-
-                        // Generate HTML for accordion
-                        Object.keys(groupedData).forEach(domain => {
-                            const domainItem = document.createElement('div');
-                            domainItem.classList.add('accordion-item');
-
-                            const domainHeader = document.createElement('h3');
-                            domainHeader.classList.add('accordion-header');
-                            domainHeader.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${domain.replaceAll(' ', '_')}" aria-expanded="true" aria-controls="${domain.replaceAll(' ', '_')}">${domain}</button>`;
-                            domainItem.appendChild(domainHeader);
-
-                            const domainCollapse = document.createElement('div');
-                            domainCollapse.id = domain.replaceAll(' ', '_');
-                            domainCollapse.classList.add('accordion-collapse', 'collapse');
-                            domainCollapse.setAttribute('aria-labelledby', `${domain.replaceAll(' ', '_')}`);
-                            domainCollapse.setAttribute('data-bs-parent', '#taxonomyAccordion');
-
-                            const domainBody = document.createElement('div');
-                            domainBody.classList.add('accordion-body');
-
-                            // Initially load phylum items without their children
-                            Object.keys(groupedData[domain]).forEach(phylum => {
-                                const phylumList = document.createElement('ul');
-                                const phylumItem = document.createElement('li');
-                                phylumItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${phylum.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${phylum.replaceAll(' ', '_')}">${phylum}</button>`;
-                                phylumItem.addEventListener('click', () => {
-                                    if (!phylumCollapse.classList.contains('show')) {
-                                        phylumCollapse.innerHTML = ''; // Clear previous content
-                                        generatePhylumItems(phylum, groupedData[domain][phylum], phylumCollapse);
-                                    }
-                                });
-                                const phylumCollapse = document.createElement('div');
-                                phylumCollapse.id = phylum.replaceAll(' ', '_');
-                                phylumCollapse.classList.add('accordion-collapse', 'collapse');
-                                phylumCollapse.setAttribute('aria-labelledby', `${phylum.replaceAll(' ', '_')}`);
-                                phylumCollapse.setAttribute('data-bs-parent', `#${domain.replaceAll(' ', '_')}`);
-                                phylumCollapse.appendChild(phylumList);
-                                phylumItem.appendChild(phylumCollapse);
-                                domainBody.appendChild(phylumItem);
-                            });
-
-                            domainCollapse.appendChild(domainBody);
-                            domainItem.appendChild(domainCollapse);
-                            taxonomyAccordion.appendChild(domainItem);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching CSV:', error);
-                    });
-            }
-
-            // Function to generate phylum items and their children
-            function generatePhylumItems(phylum, phylumData, parentElement) {
-                Object.keys(phylumData).forEach(classVal => {
-                    const classList = document.createElement('ul');
-                    const classItem = document.createElement('li');
-                    classItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${classVal.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${classVal.replaceAll(' ', '_')}">${classVal}</button>`;
-                    classItem.addEventListener('click', () => {
-                        if (!classCollapse.classList.contains('show')) {
-                            classCollapse.innerHTML = ''; // Clear previous content
-                            generateClassItems(classVal, phylumData[classVal], classCollapse);
-                        }
-                    });
-                    const classCollapse = document.createElement('div');
-                    classCollapse.id = classVal.replaceAll(' ', '_');
-                    classCollapse.classList.add('accordion-collapse', 'collapse');
-                    classCollapse.setAttribute('aria-labelledby', `${classVal.replaceAll(' ', '_')}`);
-                    classCollapse.setAttribute('data-bs-parent', `#${phylum.replaceAll(' ', '_')}`);
-                    classCollapse.appendChild(classList);
-                    classItem.appendChild(classCollapse);
-                    parentElement.appendChild(classItem);
-                });
-            }
-
-            // Function to generate class items and their children
-            function generateClassItems(classVal, classData, parentElement) {
-                Object.keys(classData).forEach(order => {
-                    const orderList = document.createElement('ul');
-                    const orderItem = document.createElement('li');
-                    orderItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${order.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${order.replaceAll(' ', '_')}">${order}</button>`;
-                    orderItem.addEventListener('click', () => {
-                        if (!orderCollapse.classList.contains('show')) {
-                            orderCollapse.innerHTML = ''; // Clear previous content
-                            generateOrderItems(order, classData[order], orderCollapse);
-                        }
-                    });
-                    const orderCollapse = document.createElement('div');
-                    orderCollapse.id = order.replaceAll(' ', '_');
-                    orderCollapse.classList.add('accordion-collapse', 'collapse');
-                    orderCollapse.setAttribute('aria-labelledby', `${order.replaceAll(' ', '_')}`);
-                    orderCollapse.setAttribute('data-bs-parent', `#${classVal.replaceAll(' ', '_')}`);
-                    orderCollapse.appendChild(orderList);
-                    orderItem.appendChild(orderCollapse);
-                    parentElement.appendChild(orderItem);
-                });
-            }
-
-            // Function to generate order items and their children
-            function generateOrderItems(order, orderData, parentElement) {
-                Object.keys(orderData).forEach(family => {
-                    const familyList = document.createElement('ul');
-                    const familyItem = document.createElement('li');
-                    familyItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${family.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${family.replaceAll(' ', '_')}">${family}</button>`;
-                    familyItem.addEventListener('click', () => {
-                        if (!familyCollapse.classList.contains('show')) {
-                            familyCollapse.innerHTML = ''; // Clear previous content
-                            generateFamilyItems(family, orderData[family], familyCollapse);
-                        }
-                    });
-                    const familyCollapse = document.createElement('div');
-                    familyCollapse.id = family.replaceAll(' ', '_');
-                    familyCollapse.classList.add('accordion-collapse', 'collapse');
-                    familyCollapse.setAttribute('aria-labelledby', `${family.replaceAll(' ', '_')}`);
-                    familyCollapse.setAttribute('data-bs-parent', `#${order.replaceAll(' ', '_')}`);
-                    familyCollapse.appendChild(familyList);
-                    familyItem.appendChild(familyCollapse);
-                    parentElement.appendChild(familyItem);
-                });
-            }
-
-            // Function to generate family items and their children
-            function generateFamilyItems(family, familyData, parentElement) {
-                familyData.forEach(genus => {
-                    const genusItem = document.createElement('li');
-                    genusItem.innerHTML = `<a href="#" data-taxonomy="${genus}">${genus}</a>`;
-                    parentElement.appendChild(genusItem);
-                });
-            }
-
-            // Call function to generate taxonomy list from CSV
-            generateTaxonomyList('https://raw.githubusercontent.com/YongNie-PKU/mPKU.github.io/main/list.csv', 'taxonomyList');
+        // 创建信息窗口
+        infoWindow = new AMap.InfoWindow({
+            isCustom: true,  // 使用自定义窗体
+            offset: new AMap.Pixel(0, -30)
+        });
+        // 添加兴趣点标记到地图
+        addMarkersToMap(map, interestPoints);
+        // 添加缩放控件
+        AMap.plugin(['AMap.ToolBar'], function () {
+            map.addControl(new AMap.ToolBar());
+        });
+        // 点击地图关闭信息窗口
+        map.on('click', function () {
+            infoWindow.close();
         });
 
 
 
+        /* }*/
 
-        var map, infoWindow;
+        // 获取指定点的坐标
+        /*  const speciesAbundance = {
+              "Bacteroides": [
+                  { "location": [116.310716, 39.99188], "abundance": 10 },
+                  { "location": [116.307484, 39.993424], "abundance": 100 }
+              ],
+              "Firmicutes": [
+                  { "location": [116.310716, 39.99188], "abundance": 5 },
+                  { "location": [116.307484, 39.993424], "abundance": 15 }
+              ],
+              "Bacilli": [
+                  { "location": [116.310716, 39.99188], "abundance": 70 },
+                  { "location": [116.307484, 39.993424], "abundance": 100 }
+              ],
+          };*/
 
-        // 初始化地图函数
-        function initMap() {
-            // 创建地图实例
-            map = new AMap.Map('map', {
-                center: [116.310716, 39.99188], // 设置地图中心点为北京大学未名湖
-                zoom: 16 // 设置地图缩放级别
-            });
-
-            // 创建信息窗口
-            infoWindow = new AMap.InfoWindow({
-                isCustom: true,  // 使用自定义窗体
-                offset: new AMap.Pixel(0, -30)
-            });
-
-            // 添加兴趣点标记到地图
-            addMarkersToMap(map, interestPoints);
-            // 添加缩放控件
-            AMap.plugin(['AMap.ToolBar'], function () {
-                map.addControl(new AMap.ToolBar());
-            });
-
-            // 点击地图关闭信息窗口
-            map.on('click', function () {
-                infoWindow.close();
+        var heatmap;
+        map.plugin(["AMap.HeatMap"], function () {
+            heatmap = new AMap.HeatMap(map, {
+                radius: 50, // Set the radius of heatmap points
+                opacity: [0, 0.8] // Set the opacity range
             });
 
 
-        }
+            // Function to update the heatmap
+            window.updateHeatmap = function (species) {
+                const data = speciesAbundance[species].map(point => ({
+                    lng: point.location[0],
+                    lat: point.location[1],
+                    count: point.abundance
+                }));
+                heatmap.setDataSet({
+                    data: data,
+
+                });
+            }
+        });
 
         // 添加标记到地图函数
         function addMarkersToMap(map, points) {
@@ -485,7 +344,6 @@
                     }),
                     map: map
                 });
-
                 // 创建信息窗口内容
                 const content = `<div class="info-window">
                           <div class="info-window-header">
@@ -512,54 +370,251 @@
     </div>
                                                                                                
                         </div>`;
-
                 // 点击标记显示信息窗口
                 marker.on('click', function () {
                     infoWindow.setContent(content);
                     infoWindow.open(map, marker.getPosition());
                     // 获取图片元素
                     const image2 = document.getElementById('image2');
-
                     // 获取按钮元素
                     const btnPhylum = document.getElementById('btnPhylum');
                     const btnClass = document.getElementById('btnClass');
                     const btnOrder = document.getElementById('btnOrder');
                     const btnFamily = document.getElementById('btnFamily');
                     const btnGenus = document.getElementById('btnGenus');
-
                     // 设置按钮点击事件处理程序
                     btnPhylum.addEventListener('click', function () {
                         image2.src = point.imgp; // 替换为实际的图片路径
                     });
-
                     btnClass.addEventListener('click', function () {
                         image2.src = point.imgc; // 替换为实际的图片路径
                     });
-
                     btnOrder.addEventListener('click', function () {
                         image2.src = point.imgo; // 替换为实际的图片路径
                     });
-
                     btnFamily.addEventListener('click', function () {
                         image2.src = point.imgf; // 替换为实际的图片路径
                     });
-
                     btnGenus.addEventListener('click', function () {
                         image2.src = point.imgg; // 替换为实际的图片路径
                     });
                 });
             });
-
         }
 
 
 
         // 加载完页面后初始化地图
-        window.onload = initMap;
+        /*window.onload = initMap;*/
+
+
+
 
 
     </script>
 
+
+
+
+    <script>
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to fetch and parse CSV data
+            function fetchCSV(url) {
+                return fetch(url)
+                    .then(response => response.text())
+                    .then(text => {
+                        // Parse CSV data
+                        const data = [];
+                        const rows = text.trim().split(/\r?\n/);
+                        const headers = rows[0].split(',');
+                        for (let i = 1; i < rows.length; i++) {
+                            const values = rows[i].split(',');
+                            const entry = {};
+                            for (let j = 0; j < headers.length; j++) {
+                                entry[headers[j].trim()] = values[j].trim();
+                            }
+                            data.push(entry);
+                        }
+                        return data;
+                    });
+            }
+            // Function to generate taxonomy list from CSV data
+            function generateTaxonomyList(csvUrl, containerId) {
+                const container = document.getElementById(containerId);
+                fetchCSV(csvUrl)
+                    .then(data => {
+                        const taxonomyAccordion = document.getElementById('taxonomyAccordion');
+                        // Group data by domain, phylum, class, order, family, genus
+                        const groupedData = {};
+                        data.forEach(entry => {
+                            const domain = entry['domain'];
+                            const phylum = entry['phylum'];
+                            const classVal = entry['class'];
+                            const order = entry['order'];
+                            const family = entry['family'];
+                            const genus = entry['genus'];
+
+                            if (!groupedData[domain]) groupedData[domain] = {};
+                            if (!groupedData[domain][phylum]) groupedData[domain][phylum] = {};
+                            if (!groupedData[domain][phylum][classVal]) groupedData[domain][phylum][classVal] = {};
+                            if (!groupedData[domain][phylum][classVal][order]) groupedData[domain][phylum][classVal][order] = {};
+                            if (!groupedData[domain][phylum][classVal][order][family]) groupedData[domain][phylum][classVal][order][family] = [];
+                            groupedData[domain][phylum][classVal][order][family].push(genus);
+                        });
+                        // Generate HTML for accordion
+                        Object.keys(groupedData).forEach(domain => {
+                            const domainItem = document.createElement('div');
+                            domainItem.classList.add('accordion-item');
+                            const domainHeader = document.createElement('h3');
+                            domainHeader.classList.add('accordion-header');
+                            domainHeader.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${domain.replaceAll(' ', '_')}" aria-expanded="true" aria-controls="${domain.replaceAll(' ', '_')}">${domain}</button>`;
+                            domainItem.appendChild(domainHeader);
+                            const domainCollapse = document.createElement('div');
+                            domainCollapse.id = domain.replaceAll(' ', '_');
+                            domainCollapse.classList.add('accordion-collapse', 'collapse');
+                            domainCollapse.setAttribute('aria-labelledby', `${domain.replaceAll(' ', '_')}`);
+                            domainCollapse.setAttribute('data-bs-parent', '#taxonomyAccordion');
+                            const domainBody = document.createElement('div');
+                            domainBody.classList.add('accordion-body');
+                            // Initially load phylum items without their children
+                            Object.keys(groupedData[domain]).forEach(phylum => {
+                                const phylumList = document.createElement('ul');
+                                const phylumItem = document.createElement('li');
+                                phylumItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${phylum.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${phylum.replaceAll(' ', '_')}">${phylum}</button>`;
+                                phylumItem.addEventListener('click', () => {
+                                    if (!phylumCollapse.classList.contains('show')) {
+                                        phylumCollapse.innerHTML = ''; // Clear previous content
+                                        generatePhylumItems(phylum, groupedData[domain][phylum], phylumCollapse);
+                                    }
+                                });
+                                phylumItem.querySelector('button').addEventListener('click', function (event) {
+                                    event.preventDefault();
+                                    const species = event.target.textContent;  // 获取按钮的文本内容，即 phylum 的值
+                                    updateHeatmap(species);
+                                });
+                                const phylumCollapse = document.createElement('div');
+                                phylumCollapse.id = phylum.replaceAll(' ', '_');
+                                phylumCollapse.classList.add('accordion-collapse', 'collapse');
+                                phylumCollapse.setAttribute('aria-labelledby', `${phylum.replaceAll(' ', '_')}`);
+                                phylumCollapse.setAttribute('data-bs-parent', `#${domain.replaceAll(' ', '_')}`);
+                                phylumCollapse.appendChild(phylumList);
+                                phylumItem.appendChild(phylumCollapse);
+                                domainBody.appendChild(phylumItem);
+                            });
+                            domainCollapse.appendChild(domainBody);
+                            domainItem.appendChild(domainCollapse);
+                            taxonomyAccordion.appendChild(domainItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching CSV:', error);
+                    });
+            }
+            // Function to generate phylum items and their children
+            function generatePhylumItems(phylum, phylumData, parentElement) {
+                Object.keys(phylumData).forEach(classVal => {
+                    const classList = document.createElement('ul');
+                    const classItem = document.createElement('li');
+                    classItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${classVal.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${classVal.replaceAll(' ', '_')}">${classVal}</button>`;
+                    classItem.addEventListener('click', () => {
+                        if (!classCollapse.classList.contains('show')) {
+                            classCollapse.innerHTML = ''; // Clear previous content
+                            generateClassItems(classVal, phylumData[classVal], classCollapse);
+                        }
+                    });
+                    classItem.querySelector('button').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const species = event.target.textContent;  // 获取按钮的文本内容，即 phylum 的值
+                        updateHeatmap(species);
+                    });
+                    const classCollapse = document.createElement('div');
+                    classCollapse.id = classVal.replaceAll(' ', '_');
+                    classCollapse.classList.add('accordion-collapse', 'collapse');
+                    classCollapse.setAttribute('aria-labelledby', `${classVal.replaceAll(' ', '_')}`);
+                    classCollapse.setAttribute('data-bs-parent', `#${phylum.replaceAll(' ', '_')}`);
+                    classCollapse.appendChild(classList);
+                    classItem.appendChild(classCollapse);
+                    parentElement.appendChild(classItem);
+                });
+            }
+            // Function to generate class items and their children
+            function generateClassItems(classVal, classData, parentElement) {
+                Object.keys(classData).forEach(order => {
+                    const orderList = document.createElement('ul');
+                    const orderItem = document.createElement('li');
+                    orderItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${order.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${order.replaceAll(' ', '_')}">${order}</button>`;
+                    orderItem.addEventListener('click', () => {
+                        if (!orderCollapse.classList.contains('show')) {
+                            orderCollapse.innerHTML = ''; // Clear previous content
+                            generateOrderItems(order, classData[order], orderCollapse);
+                        }
+                    });
+                    orderItem.querySelector('button').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const species = event.target.textContent;  // 获取按钮的文本内容，即 phylum 的值
+                        updateHeatmap(species);
+                    });
+                    const orderCollapse = document.createElement('div');
+                    orderCollapse.id = order.replaceAll(' ', '_');
+                    orderCollapse.classList.add('accordion-collapse', 'collapse');
+                    orderCollapse.setAttribute('aria-labelledby', `${order.replaceAll(' ', '_')}`);
+                    orderCollapse.setAttribute('data-bs-parent', `#${classVal.replaceAll(' ', '_')}`);
+                    orderCollapse.appendChild(orderList);
+                    orderItem.appendChild(orderCollapse);
+                    parentElement.appendChild(orderItem);
+                });
+            }
+            // Function to generate order items and their children
+            function generateOrderItems(order, orderData, parentElement) {
+                Object.keys(orderData).forEach(family => {
+                    const familyList = document.createElement('ul');
+                    const familyItem = document.createElement('li');
+                    familyItem.innerHTML = `<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#${family.replaceAll(' ', '_')}" aria-expanded="false" aria-controls="${family.replaceAll(' ', '_')}">${family}</button>`;
+                    familyItem.addEventListener('click', () => {
+                        if (!familyCollapse.classList.contains('show')) {
+                            familyCollapse.innerHTML = ''; // Clear previous content
+                            generateFamilyItems(family, orderData[family], familyCollapse);
+                        }
+                    });
+                    familyItem.querySelector('button').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const species = event.target.textContent;  // 获取按钮的文本内容，即 phylum 的值
+                        updateHeatmap(species);
+                    });
+                    const familyCollapse = document.createElement('div');
+                    familyCollapse.id = family.replaceAll(' ', '_');
+                    familyCollapse.classList.add('accordion-collapse', 'collapse');
+                    familyCollapse.setAttribute('aria-labelledby', `${family.replaceAll(' ', '_')}`);
+                    familyCollapse.setAttribute('data-bs-parent', `#${order.replaceAll(' ', '_')}`);
+                    familyCollapse.appendChild(familyList);
+                    familyItem.appendChild(familyCollapse);
+                    parentElement.appendChild(familyItem);
+                });
+            }
+            // Function to generate family items and their children
+            function generateFamilyItems(family, familyData, parentElement) {
+                familyData.forEach(genus => {
+                    const genusItem = document.createElement('li');
+                    genusItem.innerHTML = `<a href="#" data-taxonomy="${genus}">${genus}</a>`;
+                    parentElement.appendChild(genusItem);
+                    // Add event listener for clicks
+                    genusItem.querySelector('a').addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const species = event.target.getAttribute('data-taxonomy');
+                        updateHeatmap(species);
+                    });
+                });
+            }
+            // Call function to generate taxonomy list from CSV
+            generateTaxonomyList('https://raw.githubusercontent.com/YongNie-PKU/mPKU.github.io/main/list.csv', 'taxonomyList');
+        });
+
+
+
+    </script>
 </body>
 
 
