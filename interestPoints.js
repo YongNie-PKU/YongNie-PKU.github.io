@@ -169,7 +169,7 @@ interestPoints =
             "date": "2024.03.27"
         },
         {
-            "ID": "1月21日",
+            "ID": "21-1",
             "description": "一教",
             "longitude": 116.310148,
             "latitude": 39.99256,
@@ -183,7 +183,7 @@ interestPoints =
             "date": "2024.03.27"
         },
         {
-            "ID": "2月21日",
+            "ID": "21-2",
             "description": "百周年纪念讲堂",
             "longitude": 116.31058,
             "latitude": 39.9899,
@@ -197,7 +197,7 @@ interestPoints =
             "date": "2024.03.27"
         },
         {
-            "ID": "1月23日",
+            "ID": "23-1",
             "description": "教育学院",
             "longitude": 116.311572,
             "latitude": 39.98891,
@@ -211,7 +211,7 @@ interestPoints =
             "date": "2024.03.27"
         },
         {
-            "ID": "2月23日",
+            "ID": "23-2",
             "description": "38-39宿舍区",
             "longitude": 116.308488,
             "latitude": 39.98728,
