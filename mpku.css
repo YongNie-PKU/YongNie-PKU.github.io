@@ -1,0 +1,285 @@
+ /* Add custom styles here */
+ html,
+ body,
+ #map {
+     width: 80vw;
+     /* 占据视窗宽度的80% */
+     height: 90vh;
+     /* 占据整个视窗的高度 */
+ }
+
+ /* Custom styles for navigation bar */
+ .navbar.navbar-expand-lg.navbar-light.bg-light {
+     background-color: #f0f1f3 !important;
+     /* 设置导航栏的背景颜色 */
+     height: 10vh;
+     width: 100%;
+     /* 调整导航栏的高度 */
+ }
+
+ .navbar-brand {
+     display: flex;
+     align-items: center;
+     /* 垂直居中 */
+     /*font-size: 30px;*/
+     /* 调整标题的字体大小 */
+     font-weight: bold;
+     /* 设置标题的字体粗细 */
+     font-family: 'Helvetica';
+     /* 设置标题的字体 */
+
+     color: #5d5c5c;
+     /*text-decoration: none;*/
+     /* 去掉超链接 */
+     pointer-events: none;
+     /* 禁止点击 */
+
+
+ }
+
+ .navbar-brand img {
+     max-height: 80%;
+     /* 图片最大高度等于导航栏的高度 */
+     margin-right: 40px;
+     /* 图片和文字之间的间距 */
+ }
+
+ .nav-item {
+     margin-left: 80px;
+     margin-right: 40px;
+     font-size: 24px;
+     font-family: 'Helvetica';
+     color: #333;
+     font-weight: bold;
+ }
+
+ .nav-title {
+     line-height: 1;
+     /* 设置行间距为字体大小的 1.2 倍 */
+     margin-top: 15px;
+     margin-right: 60px;
+ }
+
+ /* 自定义隔离栏样式 */
+ .separator {
+     height: 2px;
+     background-color: #ccc;
+     margin: 0;
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+     /* 添加阴影效果 */
+ }
+
+ /* Custom info window styles */
+ .info-window {
+     width: 1000px;
+     height: 500px;
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     background-color: white;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     border: 1px solid #ccc;
+     border-radius: 5px;
+     overflow: hidden;
+     /* 添加此行确保内容不会溢出 */
+ }
+
+ .info-window img {
+     max-width: 100%;
+     max-height: 100px;
+     /* 限制图片高度 */
+     width: 450px;
+     display: block;
+     margin: 0 auto;
+     object-fit: contain;
+     /* 保持图片纵横比并适应容器 */
+     margin-left: 10px;
+     align-self: flex-end;
+     /* 将图片靠近底端 */
+
+
+ }
+
+ .info-window-header {
+     padding: 5px;
+     background-color: #f0f0f0;
+     margin-bottom: 10px;
+     flex: 1;
+     border-bottom: 1px solid #ddd;
+ }
+
+
+
+ .info-window-images {
+     display: flex;
+     /* 使用 Flexbox 布局 */
+     justify-content: space-between;
+     /* 图片之间的空白空间 */
+ }
+
+ .image-container {
+     flex: 1;
+     /* 均分宽度 */
+     text-align: center;
+     /* 图片居中对齐 */
+     margin: 0 5px;
+     /* 图片容器的外边距 */
+ }
+
+ .image-separator {
+     width: 3px;
+     /* 隔离栏宽度 */
+     background-color: #ccc;
+     /* 隔离栏背景颜色 */
+     margin: 0 10px;
+     /* 隔离栏外边距 */
+ }
+
+ .info-window-buttons {
+     position: absolute;
+     top: 0;
+     right: 0;
+     margin: 10px;
+ }
+
+ .info-window-buttons button {
+     margin-right: 5px;
+ }
+
+
+ /* Sidebar styles */
+ .sidebar {
+     position: absolute;
+     float: right;
+
+     right: 0px;
+     top: 0px;
+     width: 20vw;
+     height: 100vh;
+     overflow-y: auto;
+     background-color: #f8f9fa;
+     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+     font-family: Arial, sans-serif;
+     padding: 20px;
+     background-color: #f9f9f9;
+     /*z-index: 1000;*/
+     /* 设置字体为黑体 */
+     font-size: 16px;
+     /* 固定字号 */
+     vertical-align: middle;
+
+ }
+
+
+
+ /* 热力图按钮 */
+ .buttontheom {
+     position: relative;
+     vertical-align: middle;
+     width: 15px;
+     height: 15px;
+     z-index: 100;
+     /* padding: 10px; */
+     background-color: #fff;
+     border: 1px solid #ccc;
+     border-radius: 2px;
+     cursor: pointer;
+ }
+
+ ul {
+     padding-left: 0px;
+     list-style-type: none;
+     /* 移除无序列表符号 */
+ }
+
+ li {
+     position: relative;
+     padding-left: 15px;
+     /* 基本缩进，留出展开符号的位置 */
+ }
+
+ /* 创建伪元素，引导线样式 */
+ /* ul ul 表示二级菜单 */
+ #sidebar ul ul li::before {
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 1px;
+     width: 1px;
+     /* 引导线厚度 */
+     height: 100%;
+     /* 引导线高度 */
+     background-color: #0a0000;
+     /* 引导线颜色 */
+     /* display: none;移除根节点的竖线 */
+ }
+
+ /* 去掉最后一级的竖线 */
+ #sidebar ul ul:not(:has(ul))::before {
+     display: none;
+ }
+
+ /* 将最后一个子菜单项的 toggle 按钮隐藏 */
+ #sidebar ul ul li:not(:has(ul)) .toggle-btn {
+     display: none;
+ }
+
+ /* 边栏+/-号的样式 */
+ .toggle-btn {
+     /* cursor 是用来定义鼠标指针在元素上的形状或样式的属性 */
+     cursor: pointer;
+     margin-right: 10px;
+ }
+
+ .accordion-item {
+     margin-bottom: 10px;
+     /* Bacteria与Archaea之间的行距 */
+ }
+
+ .accordion-button {
+     color: #333;
+     /*字体颜色*/
+     background-color: #fff;
+     text-align: left;
+     width: 100%;
+     padding: 3px;
+     /*按钮的高和长*/
+     font-size: 14px;
+     border: none;
+     /* 去除按钮的边框 */
+
+     border-radius: 0.1px;
+     transition: background-color 0.3s ease;
+ }
+
+ .accordion-button:hover {
+     background-color: #f0f0f0;
+ }
+
+ .accordion-collapse {
+     padding-left: 10px;
+     list-style-type: none;
+     border-radius: 0.1px;
+     border: none;
+     /* 去除按钮的边框 */
+
+ }
+
+ .accordion-body {
+     font-size: 14px;
+     padding-left: 10px;
+     padding-top: 5px;
+     /* 调整为您希望的上内边距 */
+     padding-bottom: 5px;
+     /* 调整为您希望的下内边距 */
+     background-color: #fff;
+ }
+
+ .modal-content {
+     font-size: 1.2rem;
+     /* 调整模态框内容区域的字体大小 */
+ }
+
+ .modal-open {
+     overflow: hidden;
+ }
