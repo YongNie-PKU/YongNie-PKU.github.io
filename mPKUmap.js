@@ -40,7 +40,7 @@ function addMarkersToMap(map, points) {
         const content = `<div class="info-window">
                           <div class="info-window-header">
                             <h3>${point.description}</h3>
-                            <p>样品编号：${point.ID}，样品类型：${point.type}, 采样时间：${point.date}</p>
+                            <p>样品编号：${point.ID}，样品类型：${point.type}，采样时间：${point.date}，拍摄时间：${point.phototime}</p>
                             </div>  
                            <div class="info-window-images">
         <div class="image-container">

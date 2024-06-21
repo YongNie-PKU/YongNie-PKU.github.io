@@ -17,20 +17,18 @@ map.plugin(["AMap.HeatMap"], function () {
         heatmap.setDataSet({
             data: data,
 
+
         });
     }
 });
 
-const parentElement = document.getElementById('sidebar');
-
-parentElement.addEventListener('click', function (event) {
-    document.querySelectorAll('.buttontheom').forEach(function (button) {
-        button.addEventListener('click', function () {
-            // 获取按钮的 value 值
-            var species = this.value;
+document.addEventListener('DOMContentLoaded', function () {
+    // Ensure the DOM is fully loaded before adding event listeners
+    document.getElementById('sidebar').addEventListener('click', function (event) {
+        if (event.target && event.target.classList.contains('buttontheom')) {
+            var species = event.target.value;
             console.log('Clicked button value:', species);
             updateHeatmap(species);
-        });
+        }
     });
-}
-);
+});

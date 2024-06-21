@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
             li.innerHTML = `<span class="toggle-btn" data-expanded="false">+</span>${item.name} <button type="submit" value="${item.name}" class="buttontheom">&nbsp;</button>`;
 
             // 给节点button添加事件监听器
-            //let button = li.querySelector('button.buttontheom');
-            // button.addEventListener('click', handleButtonClick);
+            let button = li.querySelector('button.buttontheom');
+            button.addEventListener('click', handleButtonClick);
 
 
             // 递归创建子节点，若存在子节点且其数量大于0

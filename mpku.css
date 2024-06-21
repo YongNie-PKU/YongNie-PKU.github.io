@@ -45,8 +45,8 @@
  }
 
  .nav-item {
-     margin-left: 80px;
-     margin-right: 40px;
+     margin-left: 40px;
+     margin-right: 20px;
      font-size: 24px;
      font-family: 'Helvetica';
      color: #333;
@@ -184,6 +184,15 @@
      border: 1px solid #ccc;
      border-radius: 2px;
      cursor: pointer;
+ }
+
+ .buttontheom:active {
+     top: 2px;
+ }
+
+ .buttontheom.clicked {
+     background: radial-gradient(circle, rgb(0, 38, 255) 20%, rgb(0, 102, 255) 40%, lightblue 100%);
+     border-color: lightblue;
  }
 
  ul {

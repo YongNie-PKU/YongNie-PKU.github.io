@@ -1,8 +1,15 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
+<!-- 零基础制作，感谢ChatGPT -->
+<!-- 读取的文件需要是utf-8文件 -->
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <!-- 指定IE渲染方式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 设置视口，以确保网页在不同设备上良好显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapping the Microbes of Peking University</title>
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
@@ -105,7 +112,7 @@
                     <P>数据过渡处理：张高歌、陈彦、聂新崴</P>
                     <P>网页可视化：周孙鹏、肖维</P>
                     <P>技术支持：ChatGPT</P>
-                    <img src="us.jpg" class="img-fluid">
+                    <img src="figure/photo/us.jpg" class="img-fluid">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -126,7 +133,7 @@
                 <div class="modal-body">
                     <p>如您发现错误，或者有任何问题和建议请联系</p>
                     <p>Dr. 聂勇（nieyong@pku.edu.cn）</p>
-                    <p>我们也欢迎提供版本2.0，3.0，4.0...等经费支持或是IT支持!</p>
+                    <p>我们也欢迎版本2.0，3.0，4.0...等经费和IT支持!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -139,18 +146,18 @@
     <div id="map"></div>
     <!-- Sidebar for taxonomic list -->
     <div class="sidebar" id="sidebar">
-        <h2 style="font-size: 30px;text-align: center;">Heatmap</h2>
+        <h2 style="font-size: 30px;text-align: center;font-family: Arial, Helvetica, sans-serif; font-weight: bold;">
+            Heatmap</h2>
 
-        <p style="color: #888; text-align: center;;font-size: 16px;"><button
-                class="buttontheom">&nbsp</button>&nbsp点击按钮显示热力图</p>
+        <p style="color: #888; text-align: center;;font-size: 16px;font-family: 'Arial, Helvetica, sans-serif';">
+            <button class="buttontheom">&nbsp</button>&nbsp点击按钮显示热力图
+        </p>
 
-        <div class="accordion" id="taxonomyAccordion">
-            <!-- Taxonomic categories will be dynamically added here -->
-        </div>
+
     </div>
 
     <!-- 加载兴趣点数据和地图初始化 -->
-    <script src="interestPoints.js"></script>
+    <script src="interestPoints.json"></script>
     <script src="mPKUmap.js"></script>
     <script src="tree.js"></script>
     <script src="heatmap.js"></script>
