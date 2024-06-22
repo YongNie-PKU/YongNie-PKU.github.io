@@ -1,6 +1,6 @@
 //  DOMContentLoaded 事件监听器，在初始HTML文档被完全加载和解析后触发
 document.addEventListener("DOMContentLoaded", function () {
-    fetch('https://raw.githubusercontent.com/YongNie-PKU/mPKU.github.io/main/Ver2.0/data.json')
+    fetch('data.json')
         .then(response => response.json())
         .then(data => {
             let sidebar = document.getElementById('sidebar');
