@@ -5497,34 +5497,6 @@
                     ]
                 },
                 {
-                    "id": "p__Unclassified Bacteria",
-                    "name": "Unclassified Bacteria",
-                    "children": [
-                        {
-                            "id": "c__Unclassified Bacteria",
-                            "name": "Unclassified Bacteria",
-                            "children": [
-                                {
-                                    "id": "o__Unclassified Bacteria",
-                                    "name": "Unclassified Bacteria",
-                                    "children": [
-                                        {
-                                            "id": "f__Unclassified Bacteria",
-                                            "name": "Unclassified Bacteria",
-                                            "children": [
-                                                {
-                                                    "id": "g__Unclassified Bacteria",
-                                                    "name": "Unclassified Bacteria"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "id": "p__Verrucomicrobiota",
                     "name": "Verrucomicrobiota",
                     "children": [

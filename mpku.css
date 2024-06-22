@@ -8,6 +8,54 @@
      /* 占据整个视窗的高度 */
  }
 
+ .input-card {
+     width: 18rem;
+     height: 4rem;
+     z-index: 170;
+     position: absolute;
+     top: 10px;
+     right: 20px;
+     display: flex;
+     flex-direction: column;
+ }
+
+ .input-item {
+     display: flex;
+     align-items: center;
+     font-family: 'Helvetica';
+     color: #333;
+     font-size: 12px;
+ }
+
+ .input-item img {
+     vertical-align: middle;
+     margin: 0 5px;
+ }
+
+ .input-item p {
+     margin: 0 10px;
+     line-height: 30px;
+
+     /* 使行高与图标高度相同 */
+ }
+
+ /* 重置视图按钮 */
+ #resetButton {
+     position: absolute;
+     top: 60px;
+     right: 20px;
+     z-index: 100;
+     padding: 10px;
+     background-color: #ffffff;
+     border: 1px solid #ffffff;
+     border-radius: 5px;
+     cursor: pointer;
+     font-weight: bold;
+     font-family: 'Helvetica';
+     color: #333;
+ }
+
+
  /* Custom styles for navigation bar */
  .navbar.navbar-expand-lg.navbar-light.bg-light {
      background-color: #f0f1f3 !important;
@@ -58,6 +106,23 @@
      /* 设置行间距为字体大小的 1.2 倍 */
      margin-top: 15px;
      margin-right: 60px;
+ }
+
+ #species-info {
+     position: absolute;
+     bottom: 1px;
+     right: 20px;
+     background-color: transparent;
+     font-family: 'Helvetica';
+     color: #333;
+     padding: 2px;
+     font-size: 18px;
+ }
+
+ .italic-text {
+     font-style: italic;
+     font-weight: bold;
+     color: blue;
  }
 
  /* 自定义隔离栏样式 */
@@ -157,11 +222,10 @@
      width: 20vw;
      height: 100vh;
      overflow-y: auto;
-     background-color: #f8f9fa;
+     background-color: #ffffff;
      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
      font-family: Arial, sans-serif;
      padding: 20px;
-     background-color: #f9f9f9;
      /*z-index: 1000;*/
      /* 设置字体为黑体 */
      font-size: 16px;
@@ -240,49 +304,7 @@
      margin-right: 10px;
  }
 
- .accordion-item {
-     margin-bottom: 10px;
-     /* Bacteria与Archaea之间的行距 */
- }
 
- .accordion-button {
-     color: #333;
-     /*字体颜色*/
-     background-color: #fff;
-     text-align: left;
-     width: 100%;
-     padding: 3px;
-     /*按钮的高和长*/
-     font-size: 14px;
-     border: none;
-     /* 去除按钮的边框 */
-
-     border-radius: 0.1px;
-     transition: background-color 0.3s ease;
- }
-
- .accordion-button:hover {
-     background-color: #f0f0f0;
- }
-
- .accordion-collapse {
-     padding-left: 10px;
-     list-style-type: none;
-     border-radius: 0.1px;
-     border: none;
-     /* 去除按钮的边框 */
-
- }
-
- .accordion-body {
-     font-size: 14px;
-     padding-left: 10px;
-     padding-top: 5px;
-     /* 调整为您希望的上内边距 */
-     padding-bottom: 5px;
-     /* 调整为您希望的下内边距 */
-     background-color: #fff;
- }
 
  .modal-content {
      font-size: 1.2rem;

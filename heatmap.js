@@ -29,6 +29,30 @@ document.addEventListener('DOMContentLoaded', function () {
             var species = event.target.value;
             console.log('Clicked button value:', species);
             updateHeatmap(species);
+            displaySpeciesText(species);
         }
     });
 });
+
+function displaySpeciesText(species) {
+    var speciesInfo = document.getElementById('species-info');
+    console.log('Species info container:', speciesInfo);
+    if (speciesInfo) {
+        // Clear previous content
+        speciesInfo.textContent = '';
+
+        // 创建一个新的段落元素以显示 species 信息
+        var speciesText = document.createElement('p');
+        speciesText.innerHTML = 'Selected species: <span class="italic-text">' + species + '</span>';
+
+
+        // 追加新的文字内容
+        speciesInfo.appendChild(speciesText);
+        console.log('Species text appended:', speciesText);
+    }
+}
+
+function updateHeatmap(species) {
+    // 更新热图的逻辑
+    console.log('Updating heatmap for species:', species);
+}

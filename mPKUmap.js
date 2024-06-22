@@ -1,9 +1,12 @@
+
+
 var map, infoWindow;
 // 初始化地图函数
 /*function initMap() {*/
 // 创建地图实例
 map = new AMap.Map('map', {
     center: [116.310716, 39.99188], // 设置地图中心点为北京大学未名湖
+    mapStyle: "amap://styles/light", //设置地图的显示样式
     zoom: 16 // 设置地图缩放级别
 });
 
@@ -23,6 +26,14 @@ map.on('click', function () {
     infoWindow.close();
 });
 
+// 重置视图按钮
+document.getElementById('resetButton').addEventListener('click', function () {
+    // 刷新页面
+    location.reload();
+});
+
+
+
 
 // 添加标记到地图函数
 function addMarkersToMap(map, points) {
@@ -30,9 +41,9 @@ function addMarkersToMap(map, points) {
         const marker = new AMap.Marker({
             position: new AMap.LngLat(point.longitude, point.latitude),
             icon: new AMap.Icon({
-                size: new AMap.Size(16, 24),  // 图标大小
-                image: 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',  // 图标图片路径
-                imageSize: new AMap.Size(16, 24)
+                size: new AMap.Size(20, 34),  // 图标大小
+                image: point.icon,  // 图标图片路径
+                imageSize: new AMap.Size(20, 34)
             }),
             map: map
         });
@@ -92,3 +103,4 @@ function addMarkersToMap(map, points) {
         });
     });
 }
+
