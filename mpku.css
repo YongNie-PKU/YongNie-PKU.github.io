@@ -139,8 +139,8 @@
 
  /* Custom info window styles */
  .info-window {
-     width: 1000px;
-     height: 500px;
+     width: 1200px;
+     height: 600px;
      position: relative;
      display: flex;
      flex-direction: column;
@@ -157,12 +157,13 @@
      max-width: 100%;
      max-height: 100px;
      /* 限制图片高度 */
-     width: 450px;
+     height: 500px;
      display: block;
      margin: 0 auto;
      object-fit: contain;
      /* 保持图片纵横比并适应容器 */
-     margin-left: 10px;
+     margin-left: 5px;
+     margin-bottom: 5px;
      align-self: flex-end;
      /* 将图片靠近底端 */
 
