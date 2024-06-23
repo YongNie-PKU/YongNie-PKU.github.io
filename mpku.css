@@ -146,6 +146,7 @@
      border: 1px solid #ccc;
      border-radius: 5px;
      overflow: hidden;
+  z-index: 1000;
      /* 添加此行确保内容不会溢出 */
  }
 
