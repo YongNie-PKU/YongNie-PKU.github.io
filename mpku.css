@@ -9,12 +9,12 @@
  }
 
  .input-card {
-     width: 18rem;
-     height: 4rem;
-     z-index: 170;
+     width: 20rem;
+     height: 5rem;
+     z-index: 20;
      position: absolute;
-     top: 10px;
-     right: 20px;
+     bottom: 20px;
+     right: 55px;
      display: flex;
      flex-direction: column;
  }
@@ -24,7 +24,9 @@
      align-items: center;
      font-family: 'Helvetica';
      color: #333;
-     font-size: 12px;
+     font-size: 14px;
+     font-weight: bold;
+     z-index: 20;
  }
 
  .input-item img {
@@ -42,7 +44,7 @@
  /* 重置视图按钮 */
  #resetButton {
      position: absolute;
-     top: 60px;
+     top: 5px;
      right: 20px;
      z-index: 100;
      padding: 10px;
@@ -50,7 +52,8 @@
      border: 1px solid #ffffff;
      border-radius: 5px;
      cursor: pointer;
-     font-weight: bold;
+     size: 12px;
+
      font-family: 'Helvetica';
      color: #333;
  }
@@ -146,7 +149,7 @@
      border: 1px solid #ccc;
      border-radius: 5px;
      overflow: hidden;
-  z-index: 1000;
+     z-index: 9999;
      /* 添加此行确保内容不会溢出 */
  }
 
