@@ -41,9 +41,9 @@ function addMarkersToMap(map, points) {
         const marker = new AMap.Marker({
             position: new AMap.LngLat(point.longitude, point.latitude),
             icon: new AMap.Icon({
-                size: new AMap.Size(20, 34),  // 图标大小
+                size: new AMap.Size(18, 31),  // 图标大小
                 image: point.icon,  // 图标图片路径
-                imageSize: new AMap.Size(20, 34)
+                imageSize: new AMap.Size(18, 31)
             }),
             map: map
         });
