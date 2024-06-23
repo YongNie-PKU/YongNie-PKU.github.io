@@ -43,7 +43,7 @@ function displaySpeciesText(species) {
 
         // 创建一个新的段落元素以显示 species 信息
         var speciesText = document.createElement('p');
-        speciesText.innerHTML = 'Selected species: <span class="italic-text">' + species + '</span>';
+        speciesText.innerHTML = 'Selected: <span class="italic-text">' + species + '</span>';
 
 
         // 追加新的文字内容
